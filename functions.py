@@ -66,6 +66,27 @@ def makeEdges(vector, value = bool):
 
     return(result)
 
+#this does the same thing to the overall structure of the code, where it extends the matrix but this time it mirrors the other side of the matrix simulating a spherical map
+def mirrorEdges(vector):
+    height = len(vector)-1
+    width = len(vector[0])-1
+    result = []
+    toprow = [vector[height][width]]
+    toprow.extend(vector[height])
+    toprow.append(vector[height][0])
+    result.append(toprow)
+    for y in range(height+1):
+        row = [vector[y][width]]
+        row.extend(vector[y])
+        row.append(vector[y][0])
+        result.append(row)
+    botrow=[vector[0][width]]
+    botrow.extend(vector[0])
+    botrow.append(vector[0][0])
+    result.append(botrow)
+
+    return(result)
+
 #counts the number of neighbors to the cell at pos asuuming that the cell isnt at the edge, which shouldnt be the case since I format the edges
 def countNext(map, pos = (1,1)):
     x,y = pos

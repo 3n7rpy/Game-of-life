@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt # type: ignore
 import functions as myFunc
 
 #imports the data from the image that will be used as a starting point
-data, height, width = myFunc.bitmap2Vector("smallTest.bmp")
+data, height, width = myFunc.bitmap2Vector("test.bmp")
 
-datawEdges = myFunc.makeEdges(data, 0)
+datawEdges = myFunc.mirrorEdges(data)
 
 mapofNext= []
 for y in range(1,height+1):

@@ -1,10 +1,23 @@
-import numpy as np
-import matplotlib.pyplot as plt
-print("hello world")
+import numpy as np # type: ignore
+import matplotlib.pyplot as plt # type: ignore
+import functions as myFunc
 
-data = [[0,1,0],[0,0,0],[1,0,1]]
+#imports the data from the image that will be used as a starting point
+data, height, width = myFunc.bitmap2Vector("smallTest.bmp")
 
-plt.matshow(data)
+datawEdges = myFunc.makeEdges(data, 0)
+
+mapofNext= []
+for y in range(1,height+1):
+    row =[]
+    for x in range(1,width+1):
+        pixel = datawEdges[y][x]
+        neighbors = myFunc.countNext(datawEdges, (x,y))
+        nextValue = myFunc.rules(pixel,neighbors, 2)
+        row.append(nextValue)
+    mapofNext.append(row)
+
+plt.matshow(mapofNext)
 plt.colorbar()
 plt.show()
 

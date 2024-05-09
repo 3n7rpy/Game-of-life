@@ -25,7 +25,7 @@ for n in range(frames):
     imageList.append(myFunc.vector2Bitmap(data,f"images\\{fileName}{n}.bmp",2))
     
     #sets the bounds of the vector
-    datawEdges = myFunc.makeEdges(data, 1)
+    datawEdges = myFunc.mirrorEdges(data)
 
     #loops through the vector and applies the rules to create the next vector
     mapofNext= []
@@ -35,7 +35,7 @@ for n in range(frames):
         for x in range(1,width+1):
             pixel = datawEdges[y][x]
             neighbors = myFunc.countNext(datawEdges, (x,y))
-            nextValue = myFunc.rules(pixel,neighbors, 2)
+            nextValue = myFunc.SBrules(pixel,neighbors, [2,3],[2])
             row.append(nextValue)
             total += nextValue
         mapofNext.append(row)

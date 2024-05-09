@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 from PIL import Image
 import imageio
+import os
 
 def bitmap2Vector(filepath):
     
@@ -9,8 +10,9 @@ def bitmap2Vector(filepath):
     img = Image.open(filepath).convert("1")
 
     #gets the dimensions of the image
-    height, width = img.size
+    width, height = img.size
     
+    #print(f"height = {height}, width = {width}")
     #starts the vector that will contain the image as individual pixels
     vectorR= []
 
@@ -30,7 +32,7 @@ def bitmap2Vector(filepath):
 
     return(vectorR, height, width)
 
-def vector2Bitmap(vector,filename):
+def vector2Bitmap(vector,filename, scale = 1):
     height = len(vector)
     width = len(vector[0])
 
@@ -41,16 +43,34 @@ def vector2Bitmap(vector,filename):
         for x in range(width):
             pixels[x,y] = vector[y][x]*255
 
-    img.save(filename)
+    if scale != 1:
+        newHeight = height*scale
+        newWidth = width*scale
+        newImg = img.resize((newWidth,newHeight))
+        img = newImg
 
-def bitmaps2Gif(filePaths, outputName, fps):
+    img.save(filename)
+    return(filename)
+
+def bitmaps2Gif(filePaths, outputName, fps, loop):
     images = []
     
     for path in filePaths:
         images.append(imageio.imread(path))
 
-    imageio.mimsave(outputName, images, fps=fps)
+    imageio.mimsave(outputName, images, fps=fps, loop=loop)
     print(f"saved series of images as {outputName}")
+
+def deleteFiles(filepaths):
+    
+    for file in filepaths:
+        if os.path.exists(file):
+            try:
+                os.remove(file)
+            except:
+                print(f"error deleting {file}, L")
+        else:
+            print(f"{file} don't exist bruv")
 
 #vector that extends the matrix to have cells with the same value on the outside
 def makeEdges(vector, value = bool):

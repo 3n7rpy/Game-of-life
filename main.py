@@ -2,11 +2,11 @@ import numpy as np # type: ignore
 import matplotlib.pyplot as plt 
 import functions as myFunc
 
-fileName = 'fourbythree'
+fileName = 'test'
 #imports the data from the image that will be used as a starting point
 data, height, width = myFunc.bitmap2Vector(f"{fileName}.bmp")
 
-frames = 500
+frames = 200
 loops = 0
 
 
@@ -22,7 +22,7 @@ def updatePlot(nextFrame):
 imageList= []
 for n in range(frames):
     #turns the current vector into an image to create the gif of the final animation
-    imageList.append(myFunc.vector2Bitmap(data,f"images\\{fileName}{n}.bmp",2))
+    imageList.append(myFunc.vector2Bitmap(data,f"images\\{fileName}{n}.bmp",4))
     
     #sets the bounds of the vector
     datawEdges = myFunc.mirrorEdges(data)
@@ -35,7 +35,7 @@ for n in range(frames):
         for x in range(1,width+1):
             pixel = datawEdges[y][x]
             neighbors = myFunc.countNext(datawEdges, (x,y))
-            nextValue = myFunc.SBrules(pixel,neighbors, [2,3],[2])
+            nextValue = myFunc.SBrules(pixel,neighbors, [2,3], [3,6])
             row.append(nextValue)
             total += nextValue
         mapofNext.append(row)
@@ -48,7 +48,9 @@ for n in range(frames):
 
     #checks if the map is empty if it is then there wont be anything going on so we stop the loop
     if total == 0:
+        loops = 1
         break
+        
     #updatePlot(data)
 
 

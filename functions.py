@@ -133,7 +133,14 @@ def rules(status: bool, next: int, n: int =2):
     else:
         return(0)
         
-
+def SBrules(status, next, s, b):
+    if next in b:
+        return(1)
+    elif next in s:
+        return(status)
+    else:
+        return(0)
+    
 
 
 
